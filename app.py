@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SubmitField,SelectField
+from wtforms import StringField, SubmitField, PasswordField, SubmitField,SelectField,DateField
 from wtforms.validators import DataRequired, email_validator, Length, EqualTo
 from datetime import datetime
 
@@ -29,8 +29,13 @@ class signupForm(FlaskForm):
 
 #creating another for class for user input
 class user_input(FlaskForm):
-    commodity = SelectField('Choose commodity To foreast', choices=[('sg', 'Sugar'),
-                 ('mz', 'Maize'), ('rc', 'Rice'), ('bn', 'Beans')])
+    commodity = SelectField('Choose commodity To foreast', choices=[('sugar', 'Sugar'),
+                 ('maize', 'Maize'), ('rice', 'Rice'), ('Beans', 'Beans')])
+    
+    forecasted_date = SelectField('Choose Month in which to forecast', choices=[('2023-02-15', 'January'),
+    ('2023-02-15', 'Febuary'), ('2023-03-15', 'March'), ('2023-04-15', 'April'), ('2023-05-15', 'May'), ('2023-06-15', 'June'), 
+    ('2023-07-15', 'July'), ('2023-08-15', 'August'), ('2023-09-15', 'September'), ('2023-10-15', 'October'), ('2023-11-15', 'November'), ('2023-12-15', 'December')])
+    submit = SubmitField('Forecast')
     
 
 
@@ -39,15 +44,16 @@ def index():
     return render_template('index.html')
    
 
-@app.route('/index.html')
+@app.route('/index')
 def index1():
     return render_template('index.html')
 
 #signup route
-@app.route('/sign_up.html', methods=['GET', 'POST'])
+@app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
     
     form = signupForm()
+    
 
     if form.validate_on_submit():
         print("Form validation successful")
@@ -58,39 +64,76 @@ def sign_up():
         password = form.password.data
         password2 = form.confirm_password.data
         date_added = datetime.utcnow()
+
+        
         
 
         cur = db.connection.cursor()
-        cur.execute(" INSERT INTO user_info (FirstName, SecondName, email, phoneNumber,password, date_added ) VALUES (%s,%s,%s,%s,%s,%s)", (firstName, secondName, email, phoneNumber, password,date_added ))
-        db.connection.commit()
-        cur.close()
-        return redirect(url_for('trends'))
+        cur.execute("SELECT email FROM user_info WHERE email = %s", (email,))
+        existing_email = cur.fetchone()
+
+        if existing_email:
+            flash("email already exists")
+        else:   
+            cur.execute(" INSERT INTO user_info (FirstName, SecondName, email, phoneNumber,password, date_added ) VALUES (%s,%s,%s,%s,%s,%s)", (firstName, secondName, email, phoneNumber, password,date_added ))
+            db.connection.commit()
+            cur.close()
+            return redirect(url_for('trends'))
         
     else: flash(form.errors)
 
+
         
+           
     
-    
-    
-    return render_template('sign_up.html', 
-    
+    return render_template('sign_up.html',  
     form = form)
 
-@app.route('/dashboard.html', methods = ['GET', 'POST']) 
-def dashboard():
+@app.route('/Forecast', methods = ['GET', 'POST']) 
+def forecast():
     form = user_input()
-    return render_template('dashboard.html', form = form)
+    if form.validate_on_submit():
+        choice = form.commodity.data
+        date_choice = form.forecasted_date.data
+        flash('Here is Your forecast of ' +choice+ ' For date ' +date_choice)
+        print(choice +" is for month "+ date_choice )
+    
+    else: print(form.errors)
+
+    
+    
+
+    return render_template('Forecast.html', form = form)
 
 
 #Trends route
-@app.route('/trends.html')
+@app.route('/Dashboard')
 def trends():
-    return render_template('trends.html')
+    return render_template('Dashboard.html')
 
 #'About us' Route
-@app.route('/about.html')
+@app.route('/about')
 def about():
     return render_template('about.html')
+
+#routes for trends extensions
+@app.route('/Summary')
+def summary():
+    return render_template("summary.html")
+
+@app.route('/Key_Stats')
+def key_stats():
+    return render_template("stats.html")
+
+@app.route('/Explanations')
+def explanations():
+    return render_template('explanations.html')
+
+@app.route('/Recommendations')
+def recommendations():
+    return render_template('recommendations.html')
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,47 +1,52 @@
 {% extends "base.html" %}
 
+
 {% block content %}
-<div class="container text-center">
-  <h2>For a Better Certainty Of Prices</h2>
-  
+<header>
+    <div class="container-fluid  justify-content-between pt-2 px-5 d-flex" id="btncollection">
+        <a href="/Summary"><button class="btn btn1">Summary </button></a>
+        <a href="/Key_Stats"><button class="btn btn1">Key Stats </button></a>
+        <a href="/Explanations"><button class="btn btn1">Explanations </button></a>
+        <a href="/Recommendations"><button class="btn btn1">Recommendations </button></a>
+        
 
-</div>
-
-<!-- content container -->
-<div class="row align-items-start">
-  <div class="container col-5">
-    <h4 class="text-center py-2">Choose Predictions Here</h4>
-<div class="container-fluid">
-  
-  <!-- card section -->
-  <div class="card text-start " >
-    <div class="card-header">
-      <h5>Make prediction</h5>
     </div>
-    <div class="card-body">
-      <form action="/dashboard.html" method="POST">
-        {% form.se %}
+</header>
 
+<div class="container pt-2 justify-content-between ">
+    <h1 class="text-white-75 fw-normal text-center" id="trendsh1">Welcome To our Price Trends and Insigts</h1>
+    <!-- flexed container -->
+    <div class="container-fluid row">
+        <!-- the word section -->
+        <div class="container col-5 pt-3 text-white ">
+           <p class="fw-semibold" id="p1">Welcome to the Price Trends page! Here, you'll discover a 
+            comprehensive analysis of market trends, helping you make informed 
+            decisions in an ever-changing landscape. Our dedicated team of experts
+             utilizes advanced algorithms <br> and data analysis techniques to provide 
+            you with up-to-date insights into price movements across various markets.
+        </p>
 
-      </form>
-      
+        <p class="py-3 ">
+            With our cutting-edge forecasting models, we strive to provide
+            accurate predictions and projections for a wide range of assets. 
+        </p>
 
-      <a  type="submit" class="btn btn-primary ">Go somewhere</a>
+        <p class="opacity-50 " id="p2">
+            Let's navigate the exciting world of price trends together!
+        </p>
 
-      for
+        </div>
+
+        <!-- visual section -->
+        <div class="container-fluid col-7  ps-5 pt-4  " >
+            <div id="wrapper">
+            <img src="/static/images/kaleidico-3V8xo5Gbusk-unsplash.jpg" alt="" class="img1">
+            <img src="/static/images/regularguy-eth-UqILKDhWiFw-unsplash.jpg" alt="" class="img2">
+            <img src="/static/images/john-schnobrich-FlPc9_VocJ4-unsplash.jpg" alt="" class="img2">
+        </div>
+        </div>
+
     </div>
-    
-  </div>
-
 </div>
-<!-- image section -->
-  <div class="col-6 pt-3">
-    <div id="slideshow">
-    <img src="/static/images/maxim-hopman-fiXLQXAhCfk-unsplash.jpg" alt="">
-  </div>
-  </div>
 
-</div>
-  
 {% endblock %}
-

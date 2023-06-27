@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="sect">
+<div class="container text-center">
+  <h1 id="dashboardh1">For a Better Certainty Of Prices</h1>
+  
+</div>
+</section>
+
+<!-- content container -->
+<div class="row align-items-start">
+  <div class="container col-5">
+    <h4 class="text-center py-2" id="dashboardh4">Choose Predictions Here</h4>
+<div class="container-fluid">
+  
+  <!-- card section -->
+  <div class="card text-start " >
+    <div class="card-header">
+      <h5>Make prediction</h5>
+    </div>
+    <div class="card-body">
+      <form action="/Forecast" method="POST">
+        {{ form.csrf_token }}
+        {{form.commodity.label (class="py-2")}}
+        {{form.commodity (class="form-select w-50")}}
+        {{ form.forecasted_date.label (class="py-2")}}
+        {{ form.forecasted_date (class="form-select w-50")}}
+        {{form.submit (id = "forecast")}}
+
+
+      </form>
+      <marquee behavior="" direction="right">Forecast with us</marquee>
+
+      
+    </div>
+    
+  </div>
+</div>
+</div>
+<!-- image section -->
+  <div class="col-6 pt-3">
+    <div id="slideshow">
+    <img src="/static/images/maxim-hopman-fiXLQXAhCfk-unsplash.jpg" alt="">
+  </div>
+  </div>
+
+</div>
+<div class="container pt-4" id="foremsg">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-primary alert-dismissable fade show ">
+    {{message }}
+  </div>
+{% endfor %}
+</div>
+  
+{% endblock %}
+

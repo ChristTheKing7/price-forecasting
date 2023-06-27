@@ -8,7 +8,7 @@
         <h3 id="signheader">Sign up For an account</h3>
     </div>
     <div class="card-body">
-        <form action="/sign_up.html" method="POST" class="ps-3">
+        <form action="/sign_up" method="POST" class="ps-3">
           {{ form.csrf_token }}
             <div class="col row g-3 align-items-center ">
                 <div class="col-auto">
@@ -35,7 +35,13 @@
                 </div>
                 <div class="col-auto w-50">
                 {{form.email (class="form-control shadow-sm", type="email" )}}
-                </div>
+                <!-- flash messages -->
+                
+{% for message in get_flashed_messages() %}
+    {{message}}
+{% endfor %}
+                  
+               </div>
             </div>
             <div class="col row g-3 align-items-center pt-2"> 
                 <div class="col-auto">
@@ -66,6 +72,7 @@
                 {{form.submit (class="btn bg-primary-subtle w-auto shadow-lg", id="submit")}}
               </div>
             </form>
+            
             
           </div>
             </div>

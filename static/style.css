@@ -3,6 +3,7 @@ body{
     color: white;
     height: 100vh;
     overflow-x: hidden;
+    font-family:Georgia, 'Times New Roman', Times, serif;
 }
 img{
     width: 100%;
@@ -67,6 +68,9 @@ img{
     text-shadow: 2px 2px 4px white;
     
 
+}
+nav ul li a.active {
+    color: red;
 }
 #signheader{
     text-shadow: 2px 2px 3px #000000;
@@ -142,5 +146,40 @@ img{
     box-shadow: 3px 3px 4px black;
 }
 .card{
-    box-shadow: 3px 8px 5px black;
+    box-shadow: 5px 3px 5px black;
+}
+#forecast{
+    background-color: rgb(178, 224, 236);
+    border: 0px;
+    padding: 5px;
+    margin: 2px;
+    margin-top: 8px;
+    border-radius: 20%;
+    border:1.5px solid rgb(183, 201, 206);
+}
+#forecast:hover{
+    background-color: rgb(42, 220, 255);
+    transition: 1s;
+    border:1.5 solid rgb(178, 224, 236);
+    box-shadow: 2px 2px 3px rgb(46, 56, 58);
+}
+#dashboardh1{
+    padding-top: 20px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: rgb(111, 243, 252);
+    text-shadow: 2px 2px 2px rgb(3, 148, 156);
+}
+#sect{
+    background-color: rgb(44, 44, 72);
+    height: 100px;
+}
+#dashboardh4{
+    color: rgb(235, 0, 0);
+    text-shadow:1px 1px 2px rgb(241, 241, 243);
+}
+.about ul {
+    font-size: 12px;
+}
+#foremsg{
+    width: 100vw;
 }
