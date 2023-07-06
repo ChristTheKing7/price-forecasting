@@ -1,5 +1,131 @@
 {% extends "base.html" %}
 
 {% block content%}
+<h3 class="text-center pt-4" id="dashboardH">Providing General Statistics the different 
+    prices in different markets</h3>
+    <div class="container-fluid row py-4">
+        <div class="col container">
+            <h4 id="hd">Latest News and Updates</h4>
+            <h5 class="ms-3" id="greytxt">Stay ahead of the curve with our news and updates Section</h5>
+            <p class="ms-5 mt-3" id="greytxt">
+                From breaking News to thought provoking analysis, we deliver
+                information <br> you need to stay informed and make educated decissions
+            </p>
+
+        </div>
+        <div class="col" id="feeds">
+            <h3 class="text-center">News Feeds for you</h3>
+            <ul>
+                {%for entry in entries%}
+                <li>
+                    <h4>{{entry.title}}</h4>
+                    <p>{{entry.summary}}</p>
+                </li>
+                {%endfor%}
+            </ul>
+
+        </div>
+    </div>
+
+<div class="container-fluid row py-4">
+    <div class="col px-3">
+        <h5 id="hd">Prices of the different commodities in different markets</h5>
+        <h6 id="greytxt">
+            These are the different prices for commodities in markets including 
+            Owino, Mbale, Gulu and Masaka for this month
+        </h6>
+    </div>
+    
+    <div class="col align-items-center px-4">
+        <table class="bg-primary-subtle">
+            <tr class="table_header">
+                {% for heading in headings %}
+                <th class="table_cell">{{heading}}</th>
+                {% endfor %}
+            </tr>
+            {%for row in data%}
+            <tr class="table_row">
+
+            {% for cell in row %}
+            <td class="table_cell">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+            
+            {%endfor%}
+        </table>
+       
+       
+    </div>
+</div>
+<section>
+<div class="container text-center" id="lowestpx">
+    <h3 id="dashboardH" class="my-4">Your Market places with the with the lowest prices This Month</h3>
+    <div class="container">
+        <table>
+            <tr>
+            {% for heading in commodity_heading  %}
+            <th>{{heading}}</th>
+            {% endfor %}
+            <tr>
+                <td>{{lowest_prx}}</td>
+                <td>{{lowest_prx}}</td>
+                <td>{{lowest_prx}}</td>
+                <td>{{lowest_prx}}</td>
+            </tr>
+        </tr>
+
+        </table>
+            
+        </div>
+    </div>
+</div>
+</section>
+<!-- price drivers and Market factors -->
+<div class="container">
+    <h3 class="text-center pt-4" id="hdm">Market factors and Price Drivers</h3>
+</div>
+<div >
+    <div >
+        <h5 class="text-center">Market Factors</h5>
+        <div class="row p-5 pt-3">
+            <div class="col text-center">
+                <h6 id="hd">Government Policies</h6>
+                <p id="greytxt">
+                    This is the leading market factor. This higly determines the prices
+                    through taxation and incetives on argricultural produces
+                </p>
+            </div>
+            <div class="col text-center">
+                <h6 id="hd">International Conditions</h6>
+                <p id="greytxt">
+                    Agricultuaral prices are highly influenced by the oil prices.
+                    The war condition between Russia and Ukraine has led to fluctuation of oil prices
+                </p>
+            </div>
+            <div class="col text-center">
+                <h6 id="hd">Customer Income</h6>
+                <p id="greytxt">
+                    njkenjf kihiuwrfu oijfwiorj
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- for the images -->
+    <div class="row">
+        <h5 class="text-center">Price Drivers</h5>
+        <div class="col">
+            <h6>PRODUCT PRICE SENSETIVITY</h6>
+            <p></p>
+        </div>
+        <div class="col">
+            <h6>CONSUMER PRICE SENSETIVITY</h6>
+            <p id="greytxt">This is  plceholder for some stuff and so you shouldn't worry</p>
+        </div>
+        <div class="col">
+            <h6>MARKET PRICE SENSETIVITY</h6>
+            <p id="greytxt">This is  plceholder for some stuff and so you shouldn't worry</p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

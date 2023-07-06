@@ -168,18 +168,68 @@ nav ul li a.active {
     font-family:Georgia, 'Times New Roman', Times, serif;
     color: rgb(111, 243, 252);
     text-shadow: 2px 2px 2px rgb(3, 148, 156);
-}
-#sect{
     background-color: rgb(44, 44, 72);
     height: 100px;
 }
+#dashboardH{
+    padding-top: 20px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: rgb(3, 190, 203);
+    text-shadow: 1px 1px 2px rgb(6, 224, 235);
+    background-color: rgb(44, 44, 72);
+    height: 100px;
+}
+
 #dashboardh4{
     color: rgb(235, 0, 0);
     text-shadow:1px 1px 2px rgb(241, 241, 243);
 }
-.about ul {
+#about {
     font-size: 12px;
 }
 #foremsg{
     width: 100vw;
+}
+table {
+    width: 100%;
+    box-shadow: 2px 2px 3px black;
+    border-radius: 2px;
+}
+tr:nth-child(even){
+    background-color: #e5e5e5;
+}
+tr:nth-child(odd){
+    background-color: #c6c5c5;
+}
+#recoh1{
+    height: 100px;
+    background-color: rgb(68, 85, 122);
+}
+#recomHd{
+    height: 90px;
+    background-color: rgb(68, 85, 122);
+    text-align: center;
+
+}
+#mktpics{
+    min-height: 350px;
+
+}
+.card img{
+    background-size: cover;
+    background-position: center;
+}
+#hd{
+    color: rgb(44, 44, 72);
+}
+#hdm{
+    color: 2px 2px 2px rgb(1, 104, 109);
+    text-shadow: 2px 2px 2px rgb(5, 187, 197);
+}
+#greytxt{
+    color: rgb(220, 220, 220);
+}
+#feeds{
+    max-height: 300px;
+    overflow-y: scroll;
 }
