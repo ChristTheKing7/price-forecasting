@@ -7,6 +7,7 @@ from datetime import datetime
 import feedparser
 from apscheduler.schedulers.blocking import BlockingScheduler
 import smtplib
+from flask_mail import Message, Mail
 
 
 
@@ -22,6 +23,14 @@ app.config['MY_SQL HOST'] = "localhost"
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = "dante"
 app.config['MYSQL_DB'] = "users_db"
+#configuration for the email sending
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['USER_NAME'] = 'price4cast@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'iphmhdsgabltvfvr'
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 db = MySQL(app)
 
@@ -133,13 +142,16 @@ def forecast():
 #Trends route
 @app.route('/Dashboard')
 def trends():
-    
-    message = "this is our price for this month"
+    email = "elitecs256@gmail.com"
+    message = Message("Price Alerts", recipients=[email], sender='price4cast@gmail.com')
+    message.subject = 'Alerts for this Month!'
+    message.body = 'These are our price our prices for this month'
+
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-    email = "ssembatyadavid54@gmail.com"
-    server.login("price4cast@gmail.com", "Price4c@st256")
-    server.sendmail('price4cast@gmail.com', email, message)
+    
+    server.login("price4cast@gmail.com", "iphmhdsgabltvfvr")
+    server.sendmail('price4cast@gmail.com', email, message.as_string())
     return render_template('Dashboard.html')
 
 #'About us' Route
