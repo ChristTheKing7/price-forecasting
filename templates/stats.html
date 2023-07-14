@@ -13,17 +13,21 @@
             </p>
 
         </div>
-        <div class="col" id="feeds">
+        <div class="col" >
             <h3 class="text-center">News Feeds for you</h3>
-            <ul>
+            
+            <hr>
+            <div id="feeds">
+            <ul class="feeds">
                 {%for entry in entries%}
                 <li>
                     <h4>{{entry.title}}</h4>
-                    <p>{{entry.summary}}</p>
+                    <p>{{entry.summary}} <a class="text-info ps-2" href="{{ entry.link }}"><em>More</em> </a></p>
+                    
                 </li>
                 {%endfor%}
             </ul>
-
+        </div>
         </div>
     </div>
 
@@ -47,7 +51,7 @@
             <tr class="table_row">
 
             {% for cell in row %}
-            <td class="table_cell">{{ cell }}</td>
+            <td class="table_cell ps-2">{{ cell }}</td>
             {% endfor %}
         </tr>
             
@@ -58,16 +62,17 @@
     </div>
 </div>
 <section>
-<div class="container text-center" id="lowestpx">
+<div class="container text-center " id="lowestpx">
     <h3 id="dashboardH" class="my-4">Your Market places with the with the lowest prices This Month</h3>
-    <div class="container">
-        <table>
-            <tr>
+    <div class="container ">
+        <center>
+        <table class="w-75 text-center">
+            <tr class="table_cell ">
             {% for heading in commodity_heading  %}
             <th>{{heading}}</th>
             {% endfor %}
-            <tr>
-                <td>{{lowest_prx}}</td>
+            <tr id="hdm">
+                <td >{{lowest_prx}}</td>
                 <td>{{lowest_prx}}</td>
                 <td>{{lowest_prx}}</td>
                 <td>{{lowest_prx}}</td>
@@ -75,6 +80,7 @@
         </tr>
 
         </table>
+    </center>
             
         </div>
     </div>
@@ -82,7 +88,7 @@
 </section>
 <!-- price drivers and Market factors -->
 <div class="container">
-    <h3 class="text-center pt-4" id="hdm">Market factors and Price Drivers</h3>
+    <h3 class="text-center pt-4 mt-4" id="hdm">Market factors and Price Drivers</h3>
 </div>
 <div >
     <div >
@@ -105,7 +111,10 @@
             <div class="col text-center">
                 <h6 id="hd">Customer Income</h6>
                 <p id="greytxt">
-                    njkenjf kihiuwrfu oijfwiorj
+                    Consumer income in Uganda varies with individulas with majority below
+                    the poverty line. This influences there spending petterns hence the need to procure
+                    in the most appropriate time. Understanding consumer income and spending patterns in 
+                    developing countries is crucial for policymakers, businesses, and organizations.
                 </p>
             </div>
         </div>
@@ -113,17 +122,32 @@
     <!-- for the images -->
     <div class="row">
         <h5 class="text-center">Price Drivers</h5>
-        <div class="col">
-            <h6>PRODUCT PRICE SENSETIVITY</h6>
-            <p></p>
+        <div class="col text-center">
+            <h6 id="hd">PRODUCT PRICE SENSETIVITY</h6>
+            <p id="greytxt">Product price sensitivity refers to the extent to which changes
+                 in the price of a product or service affect consumer demand for that product. 
+                 It is a measure of how responsive consumers are to price fluctuations.
+                 Understanding product price sensitivity is crucial for
+                 businesses when determining pricing strategies and optimizing sales volume and revenue.</p>
         </div>
-        <div class="col">
-            <h6>CONSUMER PRICE SENSETIVITY</h6>
-            <p id="greytxt">This is  plceholder for some stuff and so you shouldn't worry</p>
+        <div class="col text-center">
+            <h6 id="hd">CONSUMER PRICE SENSETIVITY</h6>
+            <p id="greytxt">Market price sensitivity pertains to the responsiveness of the overall
+                 market or industry to changes in product prices. It involves analyzing how price
+                  changes can influence market demand, competitive dynamics, and market share. 
+                  Market price sensitivity is vital for businesses to assess market conditions,
+                   anticipate competitive responses, 
+                and make informed pricing decisions to stay competitive and maximize profitability.</p>
         </div>
-        <div class="col">
-            <h6>MARKET PRICE SENSETIVITY</h6>
-            <p id="greytxt">This is  plceholder for some stuff and so you shouldn't worry</p>
+        <div class="col text-center">
+            <h6 id="hd">MARKET PRICE SENSETIVITY</h6>
+            <p id="greytxt">Consumer price sensitivity focuses on the reactions and behaviors of
+                 individual consumers towards price changes. It examines how sensitive consumers
+                  are to price variations and how their purchasing decisions are influenced by 
+                  price levels. Understanding consumer price sensitivity helps businesses 
+                  determine optimal pricing levels, identify price thresholds, and develop 
+                  effective pricing strategies that align with consumer preferences and maximize
+                   customer satisfaction and loyalty.</p>
         </div>
     </div>
 </div>

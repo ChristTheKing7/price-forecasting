@@ -5,26 +5,275 @@
 <h2 class="text-center">Summary of Key Highlights</h2>
 </div>
 <div class="container row" >
-    <div class="col ">
+    <div class="col-5">
         <h4>Discover the concise summary of the main <br> highlights from our gallery.</h4>
         <h6 class="ps-4">
             <p> This section provides a comprehensive overview, capturing
              the essence of the diverse range of items available.</p>
             <p>  Dive into this condensed version to quickly grasp the standout features, trends, and unique offerings that make our gallery
-             a must-visit destination for enthusiasts and collectors alike.</h6>
+             a must-visit destination for economic enthusiasts and collectors alike.</h6>
             </p>
             
     </div>
     
-    <div class="col"></div>
+    <div class="col-7" id="graphWrapper">
+      
+      <canvas class="bg-light-subtle" id="FlourChart"></canvas>
+      <canvas class="bg-light-subtle" id="BeanChart"></canvas>
+      <canvas class="bg-light-subtle" id="SugarChart"></canvas>
+      <canvas class="bg-light-subtle" id="RiceChart"></canvas>
+      <!-- maize flour chart -->
+      <script>
+        var ctx = document.getElementById("FlourChart").getContext('2d')
+        var lineChart = new Chart(ctx,{
+          type: "line",
+          data: {
+            labels: {{ labels | safe }},
+            datasets: [
+              {
+                label:"Flour Owino",
+                data: {{ values_flour_owino | safe }},
+                fill: true,
+                borderColor: "rgb(200, 0, 0)",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Flour Gulu",
+                data: {{ values_flour_masaka | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 0)",
+                backgroundColor: "rgba(0, 150, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Flour Mbale",
+                data: {{ values_flour_mbale | safe }},
+                fill: true,
+                borderColor: "rgb(0, 0, 255)",
+                backgroundColor: "rgba(3, 5,255 , 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Flour Gulu",
+                data: {{ values_flour_gulu | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 255)",
+                backgroundColor: "rgba(0, 255, 255, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              }
+            
+              
+              
+            ]
+          },
+          options:{
+            responsive: true,
+            
+            
+          }
+        } )
+        
+      </script>
+      <!-- sugar chart -->
+      <script>
+        var ctx = document.getElementById("SugarChart").getContext('2d')
+        var lineChart = new Chart(ctx,{
+          type: "line",
+          data: {
+            labels: {{ labels | safe }},
+            datasets: [
+              {
+                label:"Sugar Owino",
+                data: {{ values_sugar_owino  | safe }},
+                fill: true,
+                borderColor: "rgb(200, 0, 0)",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Sugar Gulu",
+                data: {{ values_sugar_masaka  | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 0)",
+                backgroundColor: "rgba(0, 150, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Sugar Mbale",
+                data: {{ values_sugar_mbale  | safe }},
+                fill: true,
+                borderColor: "rgb(0, 0, 255)",
+                backgroundColor: "rgba(3, 5,255 , 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Sugar Gulu",
+                data: {{ values_sugar_gulu  | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 255)",
+                backgroundColor: "rgba(0, 255, 255, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              }
+            
+              
+              
+            ]
+          },
+          options:{
+            responsive: true,
+            
+            
+          }
+        } )
+        
+      </script>
+      <!--  bean Chat -->
+      <script>
+        var ctx = document.getElementById("BeanChart").getContext('2d')
+        var lineChart = new Chart(ctx,{
+          type: "line",
+          data: {
+            labels: {{ labels | safe }},
+            datasets: [
+              {
+                label:"Beans Owino",
+                data: {{ values_beans_owino | safe }},
+                fill: true,
+                borderColor: "rgb(200, 0, 0)",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Beans Gulu",
+                data: {{ values_beans_masaka  | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 0)",
+                backgroundColor: "rgba(0, 150, 0, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Beans Mbale",
+                data: {{ values_beans_mbale | safe }},
+                fill: true,
+                borderColor: "rgb(0, 0, 255)",
+                backgroundColor: "rgba(3, 5,255 , 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              },
+              {
+                label:" Beans Gulu",
+                data: {{ values_beans_gulu  | safe }},
+                fill: true,
+                borderColor: "rgb(0, 255, 255)",
+                backgroundColor: "rgba(0, 255, 255, 0.2)",
+                borderWidth: 2,
+                
+                lineTension: 0.4
+              }
+            
+              
+              
+            ]
+          },
+          options:{
+            responsive: true,
+            
+            
+          }
+        } )
+        
+      </script>
     
+    <script>
+      var ctx = document.getElementById("RiceChart").getContext('2d')
+      var lineChart = new Chart(ctx,{
+        type: "line",
+        data: {
+          labels: {{ labels | safe }},
+          datasets: [
+            {
+              label:"Rice Owino",
+              data: {{ values_rice_owino | safe }},
+              fill: true,
+              borderColor: "rgb(200, 0, 0)",
+              backgroundColor: "rgba(255, 0, 0, 0.2)",
+              borderWidth: 2,
+              
+              lineTension: 0.4
+            },
+            {
+              label:" Rice Gulu",
+              data: {{ values_rice_masaka | safe }},
+              fill: true,
+              borderColor: "rgb(0, 255, 0)",
+              backgroundColor: "rgba(0, 150, 0, 0.2)",
+              borderWidth: 2,
+              
+              lineTension: 0.4
+            },
+            {
+              label:" Rice Mbale",
+              data: {{ values_rice_mbale | safe }},
+              fill: true,
+              borderColor: "rgb(0, 0, 255)",
+              backgroundColor: "rgba(3, 5,255 , 0.2)",
+              borderWidth: 2,
+              
+              lineTension: 0.4
+            },
+            {
+              label:" Rice Gulu",
+              data: {{ values_rice_gulu | safe }},
+              fill: true,
+              borderColor: "rgb(0, 255, 255)",
+              backgroundColor: "rgba(0, 255, 255, 0.2)",
+              borderWidth: 2,
+              
+              lineTension: 0.4
+            }
+          
+            
+            
+          ]
+        },
+        options:{
+          responsive: true,
+          
+          
+        }
+      } )
+      
+    </script>
+    </div>
 </div>
 <h2 class="text-center" id="dashboardh1">Overview</h2>
 <h3 class="text-center">Market Factors and Pirce Drivers</h3>
 <div class="row py-4 ps-4 justify-content-center">
     <div class="col">
         <div class="card" style="width: 18rem;">
-            <img src="/static/images/market factors.png" class="card-img-top" alt="...">
+            
             <div class="card-body">
               <h5 class="card-title">Market Factors</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -40,8 +289,8 @@
           </div>
     </div>
     <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img src="/static/images/price drivers.png" class="card-img-top" alt="...">
+        <div class="card" id="card2" style="width: 18rem;">
+           
             <div class="card-body">
               <h5 class="card-title">Price Drivers</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -58,7 +307,7 @@
     </div>
     <div class="col">
         <div class="card" style="width: 18rem;">
-            <img src="/static/images/market segmentation.png" class="card-img-top" alt="...">
+            
             <div class="card-body">
               <h5 class="card-title">Market Segmentation</h5>
               <p class="card-text"> Markets are devided into approachable groups.</p>

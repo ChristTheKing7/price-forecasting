@@ -36,10 +36,13 @@
                 <div class="col-auto w-50">
                 {{form.email (class="form-control shadow-sm", type="email" )}}
                 <!-- flash messages -->
+    
+            
+        {% for message in get_flashed_messages() %}
                 
-{% for message in get_flashed_messages() %}
-    {{message}}
-{% endfor %}
+          {{message}}
+                  
+        {%endfor%}
                   
                </div>
             </div>

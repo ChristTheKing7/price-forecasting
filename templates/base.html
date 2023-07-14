@@ -12,6 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
 
+<!-- chartist js cdn links -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<!-- chart js cdn -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+
 </head>
 <body>
 
@@ -25,17 +32,17 @@
             
             <ul class="navbar-nav me-auto mb-2 mb-lg-0  ">
               <li class="nav-item">
-                <a class="nav-link active text-white fw-light" aria-current="page" href="sign_up">Login</a>        
+                <a class="nav-link active text-white fw-light" aria-current="page" href="{{url_for('sign_up') }}">Login</a>        
                 </li>
               
               <li class="nav-item">
-                <a class="nav-link active text-white fw-light" aria-current="page" href="Forecast">Forecast</a>
+                <a class="nav-link active text-white fw-light" aria-current="page" href="{{url_for('forecast') }}">Forecast</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active text-white fw-light" aria-current="page" href="Dashboard">Dashboard</a>
+                <a class="nav-link active text-white fw-light" aria-current="page" href="{{url_for('trends') }}">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active text-white fw-light" aria-current="page" href="about">About Us</a>        
+                <a class="nav-link active text-white fw-light" aria-current="page" href="{{url_for('about') }}">About Us</a>        
                 </li>
             </ul>
             
@@ -52,7 +59,7 @@
 
       <footer>
         <div class="container-fluid bg-dark text-opacity-50 text-primary ">
-          <div class=" d-flex row justify-content-center ">
+          <div class=" d-flex row justify-content-evenly ">
             <div class="col ps-4 ">
               <p class="py-0 text-white-50 ">Contacts </p>
               <p class="py-0 ">+256707685766</p>
@@ -81,4 +88,5 @@
           </div>
         </div>
       </footer>
+      
       </body>

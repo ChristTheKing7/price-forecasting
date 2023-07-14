@@ -47,11 +47,179 @@
 </div>
 <div class="container pt-4" id="foremsg">
   {% for message in get_flashed_messages() %}
-  <div class="alert alert-primary alert-dismissable fade show ">
-    {{message }}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-{% endfor %}
+  {%endfor%}
+  
+  
+<!-- table for the forecast -->
+
+{% if condition %}
+ <!-- table for forecast -->
+ 
+ <center>
+  
+ <table class="mb-5 w-75 text-center ">
+  <tr>
+  {% for heading in commodity_heading  %}
+  <th class="table_cell">{{heading}}</th>
+  {% endfor %}
+  <tr id="hdm">
+      <td>{{choice}}</td>
+      <td>{{lowest_prx}}</td>
+      <td>{{lowest_prx}}</td>
+      <td>{{lowest_prx}}</td>
+      <td>{{lowest_prx}}</td>
+  </tr>
+</tr>
+
+</table>
+<!--  graph feild -->
+<div class="col w-75 mb-2 pb-2">
+  {%if choice == "Sugar"%}
+ <canvas class="bg-light-subtle" id="SugarChart"></canvas>
+      
+  {%elif choice == "Maize"%}
+  <canvas class="bg-light-subtle" id="FlourChart"></canvas>
+  {%elif choice == "Rice"%}
+  <canvas class="bg-light-subtle" id="RiceChart"></canvas>
+  {%else%}
+  <canvas class="bg-light-subtle" id="BeanChart"></canvas>
+  {%endif%}
+  
 </div>
+</center>
+
+
+{% endif %}
+
+</div>
+<!-- javascript for the graphs -->
+
+<script>
+  var ctx = document.getElementById("FlourChart").getContext('2d')
+  var lineChart = new Chart(ctx,{
+    type: "line",
+    data: {
+      labels: {{ labels | safe }},
+      datasets: [
+        {
+          label:"Maize Flour",
+          data: {{ values_flour | safe }},
+          fill: true,
+          borderColor: "rgb(0, 0, 255)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderWidth: 2,
+          borderDash: [5, 2],
+          lineTension: 0.4
+        }
+        
+      ]
+    },
+    options:{
+      responsive: true,
+      
+      
+    }
+  } )
+  
+</script>
+<script>
+  var ctx = document.getElementById("BeanChart").getContext('2d')
+  var lineChart = new Chart(ctx,{
+    type: "line",
+    data: {
+      labels: {{ labels | safe }},
+      datasets: [
+        {
+          label:"Beans",
+          data: {{ values_beans | safe }},
+          fill: true,
+          borderColor: "rgb(230,0 ,0 )",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderWidth: 2,
+          borderDash: [5, 2],
+          lineTension: 0.4
+        }
+        
+      ]
+    },
+    options:{
+      responsive: true,  
+    }
+  } )
+  
+</script>
+<!-- sugarChat -->
+<script>
+  var ctx = document.getElementById("SugarChart").getContext('2d')
+  var lineChart = new Chart(ctx,{
+    type: "line",
+    data: {
+      labels: {{ labels | safe }},
+      datasets: [
+        {
+          label:"Sugar",
+          data: {{ values_sugar | safe }},
+          fill: true,
+          borderColor: "rgb(0, 0, 255)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderWidth: 2,
+          borderDash: [5, 2],
+          lineTension: 0.4
+        }
+        
+      ]
+    },
+    options:{
+      responsive: true,
+    }
+  } )
+  
+</script>
+
+<script>
+var ctx = document.getElementById("RiceChart").getContext('2d')
+var lineChart = new Chart(ctx,{
+  type: "line",
+  data: {
+    labels: {{ labels | safe }},
+    datasets: [
+      {
+        label:"Rice",
+        data: {{ values_rice | safe }},
+        fill: true,
+        borderColor: "rgb(0, 0, 255)",
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+        ],
+        borderWidth: 2,
+        borderDash: [5, 2],
+        lineTension: 0.4
+      }
+      
+    ]
+  },
+  options:{
+    responsive: true, 
+    scales: {
+y: {
+  ticks: {
+    color: "blue" // Change the color of the data labels here
+  }
+}
+}
+  }
+} )
+
+</script>
   
 {% endblock %}
 

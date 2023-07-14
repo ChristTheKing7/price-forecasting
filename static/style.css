@@ -110,27 +110,50 @@ nav ul li a.active {
     box-shadow: 3px 3px 4px rgb(35, 34, 34);
 }
 #wrapper > img{
-    position: absolute;
-    animation: animate 25s infinite;
-    opacity: 0;
+   z-index: -1;
 }
-#wrapper > img:nth-child(2){
+#wrapper div{
+    position: absolute;
+    animation: animate 15s infinite;
+    opacity: 0;
+
+}
+#wrapper > div:nth-child(2){
     animation-delay: 5s;
 }
-#wrapper > img:nth-child(3){
+#wrapper > div:nth-child(3){
     animation-delay: 10s;
 }
 @keyframes animate{
-    25%{
+    0% {
+        opacity: 0;
+        transform: translateX(0%);
+      }
+      20% {
         opacity: 1;
+        transform: translateX(0%);
+      }
+      33.33% {
+        opacity: 1;
+        transform: translateX(-100%);
+      }
+      53.33% {
+        opacity: 1;
+        transform: translateX(-100%);
+      }
+      66.66% {
+        opacity: 1;
+        transform: translateX(-200%);
+      }
+      86.66% {
+        opacity: 1;
+        transform: translateX(-200%);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-200%);
+      }
     }
-    50%{
-        opacity: 2;
-    }
-    75%{
-        opacity: 3;
-    }
-}
 #btncollection{
     position: static;
     top: 50px;
@@ -226,10 +249,71 @@ tr:nth-child(odd){
     color: 2px 2px 2px rgb(1, 104, 109);
     text-shadow: 2px 2px 2px rgb(5, 187, 197);
 }
+
 #greytxt{
     color: rgb(220, 220, 220);
+    font-family: monospace;
+    font-style: italic;
+}
+#greytxt:hover{
+    
+    color: 2px 2px 2px rgb(1, 104, 109);
+    text-shadow: 2px 2px 2px rgb(5, 187, 197);
+    
+    font-stretch: expanded;
+    
 }
 #feeds{
     max-height: 300px;
     overflow-y: scroll;
+}
+
+/* slide show for graphs */
+#graphWrapper{
+  
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 3px 3px 4px rgb(35, 34, 34);
+}
+#graphWrapper canvas{
+    position: absolute;
+    animation: slide 20s infinite;
+    opacity: 0;
+}
+#graphWrapper > canvas:nth-child(2){
+    animation-delay: 5s;
+}
+#graphWrapper > canvas:nth-child(3){
+    animation-delay: 10s;
+}
+#graphWrapper > canvas:nth-child(4){
+    animation-delay: 15s;
+}
+@keyframes slide{
+    0% {
+        opacity: 0;
+        transform: translateX(0%);
+      }
+      20% {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+      
+      53.33% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+     
+      86.66% {
+        opacity: 0;
+        transform: translateX(-200%);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-200%);
+      }
+    }
+.table_cell{
+    color: rgb(44, 44, 72);
 }

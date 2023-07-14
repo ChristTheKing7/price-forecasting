@@ -4,10 +4,10 @@
 {% block content %}
 <header>
     <div class="container-fluid  justify-content-between pt-2 px-5 d-flex" id="btncollection">
-        <a href="/Summary"><button class="btn btn1">Summary </button></a>
-        <a href="/Key_Stats"><button class="btn btn1">Key Stats </button></a>
-        <a href="/Explanations"><button class="btn btn1">Explanations </button></a>
-        <a href="/Recommendations"><button class="btn btn1">Recommendations </button></a>
+        <a href="{{url_for('summary') }}"><button class="btn btn1">Summary </button></a>
+        <a href="{{url_for('key_stats') }}"><button class="btn btn1">Key Stats </button></a>
+        
+        <a href="{{url_for('recommendations') }}"><button class="btn btn1">Recommendations </button></a>
         
 
     </div>
@@ -40,9 +40,18 @@
         <!-- visual section -->
         <div class="container-fluid col-7  ps-5 pt-4  " >
             <div id="wrapper">
-            <img src="/static/images/kaleidico-3V8xo5Gbusk-unsplash.jpg" alt="" class="img1">
+                <div>
+            <img src="/static/images/kaleidico-3V8xo5Gbusk-unsplash.jpg" alt="" class="img1" >
+            <h5>Recommendations</h5>
+        </div>
+            <div>
             <img src="/static/images/regularguy-eth-UqILKDhWiFw-unsplash.jpg" alt="" class="img2">
+            <h5 class="text-center">Key Stats</h5>
+        </div>
+            <div>
             <img src="/static/images/john-schnobrich-FlPc9_VocJ4-unsplash.jpg" alt="" class="img2">
+            <h5 class="text-end">Summary</h5>
+        </div>
         </div>
         </div>
 
