@@ -5,7 +5,7 @@ from wtforms import StringField, SubmitField, PasswordField, SubmitField,SelectF
 from wtforms.validators import DataRequired, email_validator, Length, EqualTo
 from datetime import datetime
 import feedparser
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 import smtplib
 from flask_mail import Message, Mail
 
@@ -23,13 +23,7 @@ app.config['MY_SQL HOST'] = "localhost"
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = "dante"
 app.config['MYSQL_DB'] = "users_db"
-#configuration for the email sending
-# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-# app.config['MAIL_PORT'] = 465
-# app.config['USER_NAME'] = 'price4cast@gmail.com'
-# app.config['MAIL_PASSWORD'] = 'iphmhdsgabltvfvr'
-# app.config['MAIL_USE_TLS'] = False
-# app.config['MAIL_USE_SSL'] = True
+
 mail = Mail(app)
 
 db = MySQL(app)
@@ -59,8 +53,25 @@ class user_input(FlaskForm):
     submit = SubmitField('Forecast')
     
 def sendmail():
+    with app.app_context():
+        email = "elitecs256@gmail.com"
+        message = Message("Price Alerts", recipients=[email], sender='price4cast@gmail.com')
+        message.subject = 'Alerts for this Month!'
+        message.body = 'These are our price our prices for this month'
+
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+    
+        server.login("price4cast@gmail.com", "iphmhdsgabltvfvr")
+        server.sendmail('price4cast@gmail.com', email, message.as_string())
+#creating a scheduler that sends emails
+email_scheduler = BackgroundScheduler()
+email_scheduler.add_job(sendmail, 'interval', minutes=1, start_date='2023-07-14 17:35:00')
+# # Start the scheduler
+email_scheduler.start()
    
-    return 
+
+
 
 @app.route('/')
 def index():
@@ -136,22 +147,14 @@ def forecast():
     return render_template('Forecast.html', form = form, condition = condition,
     commodity_heading = commodity_heading, choice = choice,
     labels = label,values_flour = values_flour,
-   values_beans = values_beans, values_sugar=values_sugar, values_rice= values_rice)
+   values_beans = values_beans, values_sugar=values_sugar, values_rice= values_rice,
+   lowest_prx =lowest_prx )
 
 
 #Trends route
 @app.route('/Dashboard')
 def trends():
-    email = "elitecs256@gmail.com"
-    message = Message("Price Alerts", recipients=[email], sender='price4cast@gmail.com')
-    message.subject = 'Alerts for this Month!'
-    message.body = 'These are our price our prices for this month'
-
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
-    
-    server.login("price4cast@gmail.com", "iphmhdsgabltvfvr")
-    server.sendmail('price4cast@gmail.com', email, message.as_string())
+    sendmail()
     return render_template('Dashboard.html')
 
 #'About us' Route
@@ -261,11 +264,7 @@ def fetch_feeds():
     feed_title = feed.feed.title
 
     return feed_title, entries, feed_urls
-#scheduler = BlockingScheduler()
-# # Schedule the fetch_feeds function to run daily at a specific time
-# scheduler.add_job(fetch_feeds, 'interval', days=1, start_date='2023-07-10 19:06:00')
-# # Start the scheduler
-# scheduler.start()
+
 
 @app.route('/Key_Stats')
 def key_stats():
