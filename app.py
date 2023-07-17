@@ -3,11 +3,13 @@ from flask import Flask
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SubmitField,SelectField,DateField
 from wtforms.validators import DataRequired, email_validator, Length, EqualTo
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import feedparser
 from apscheduler.schedulers.background import BackgroundScheduler
 import smtplib
 from flask_mail import Message, Mail
+import os
 
 
 
@@ -19,14 +21,28 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = "CTKDANTE"
-app.config['MY_SQL HOST'] = "localhost"
-app.config['MYSQL_USER'] = "root"
-app.config['MYSQL_PASSWORD'] = "dante"
-app.config['MYSQL_DB'] = "users_db"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://users_db_yfaj_user:imK9YfoZzmj3J1GUFS085uEECdmwxccI@dpg-cips9plgkuvrtof1qm3g-a.oregon-postgres.render.com/users_db_yfaj'
+app.config['SQLALCHEMY_ECHO'] = True  # Optional: For printing SQL commands
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Optional: Disable tracking modifications
+
+
+#postgres://users_db_yfaj_user:imK9YfoZzmj3J1GUFS085uEECdmwxccI@dpg-cips9plgkuvrtof1qm3g-a.oregon-postgres.render.com/users_db_yfaj
+#db_uri = 'postgres://users_db_yfaj_user:imK9YfoZzmj3J1GUFS085uEECdmwxccI@dpg-cips9plgkuvrtof1qm3g-a.oregon-postgres.render.com/users_db_yfaj'
+ 
 
 mail = Mail(app)
 
-db = MySQL(app)
+db = SQLAlchemy(app)
+
+#create model
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key = True, )
+    FirstName = db.Column(db.String(50), nullable= False)
+    SecondName = db.Column(db.String(50), nullable= False)
+    email = db.Column(db.String(100), nullable= False, unique=True)
+    password = db.Column(db.String(50), nullable= False)
+    phoneNumber = db.Column(db.String, nullable= False)
+    #date_added = db.Column(db.DateTime, Default=datetime.utcnow)
 
 
 
@@ -51,25 +67,59 @@ class user_input(FlaskForm):
     ('2023-07-15', 'July'), ('2023-08-15', 'August'), ('2023-09-15', 'September'), ('2023-10-15', 'October'), ('2023-11-15', 'November'), ('2023-12-15', 'December')])
     
     submit = SubmitField('Forecast')
+
+##prices for the current onth
+def send_mail_wrapper():
+    Rice_this_month = 4000
+    Sugar_this_month = 3500
+    cassava_this_month = 2000
+    send_mail(Rice_this_month, Sugar_this_month, cassava_this_month)
+
+
     
-def sendmail():
+def send_mail(rice, sugar, cassava):
     with app.app_context():
         email = "elitecs256@gmail.com"
         message = Message("Price Alerts", recipients=[email], sender='price4cast@gmail.com')
         message.subject = 'Alerts for this Month!'
-        message.body = 'These are our price our prices for this month'
+        #converting the integer prices to strings
+        rice_str = str(rice)
+        sugar_str = str(sugar)
+        cassava_str = str(cassava)
 
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-    
-        server.login("price4cast@gmail.com", "iphmhdsgabltvfvr")
-        server.sendmail('price4cast@gmail.com', email, message.as_string())
-#creating a scheduler that sends emails
+        message.body = 'These are our prices for this month:\nRice: ' + rice_str + ', Sugar: ' + sugar_str + ', Cassava: ' + cassava_str
+        try:
+        # Your email sending code here
+        # For example, using smtplib to send an email
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            email = "ssembatyadavid54@gmail.com"
+            server.login("price4cast@gmail.com", "rmkpwdsijfwtauee")
+            server.sendmail('price4cast@gmail.com', email, "Your email content")
+            server.quit()
+            print("Email sent successfully!")
+        except smtplib.SMTPDataError as e:
+            print(f"SMTPDataError: {e}")
+            print("Daily user sending quota exceeded. Please try again later or upgrade your account.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        print(message.body)
+#creating a function that fetches emails
+def get_emails():
+    # Query the Users table to get only the 'email' column
+    emails = Users.query.with_entities(Users.email).all()
+
+    # Extract the emails from the query result (list of tuples) into a list
+    email_list = [email for (email,) in emails]
+    print(email_list)
+
+    return email_list
+        
+# #creating a scheduler that sends emails
 email_scheduler = BackgroundScheduler()
-email_scheduler.add_job(sendmail, 'interval', minutes=1, start_date='2023-07-14 17:35:00')
-# # Start the scheduler
+email_scheduler.add_job(send_mail_wrapper, 'interval', days=30, start_date='2023-07-17 10:35:00')
+# # # Start the scheduler
 email_scheduler.start()
-   
 
 
 
@@ -98,27 +148,14 @@ def sign_up():
         password = form.password.data
         password2 = form.confirm_password.data
         date_added = datetime.utcnow()
-
+        with app.app_context():
+            
+            user = Users(FirstName=firstName, SecondName=secondName, email=email, password=password, phoneNumber=phoneNumber)
+            db.session.add(user)
+            db.session.commit() 
         
         
-
-        cur = db.connection.cursor()
-        cur.execute("SELECT email FROM user_info WHERE email = %s", (email,))
-        existing_email = cur.fetchone()
-
-        if existing_email:
-            flash("email already exists")
-        else:   
-            cur.execute(" INSERT INTO user_info (FirstName, SecondName, email, phoneNumber,password, date_added ) VALUES (%s,%s,%s,%s,%s,%s)", (firstName, secondName, email, phoneNumber, password,date_added ))
-            db.connection.commit()
-            cur.close()
-            return redirect(url_for('trends'))
-        
-    else: flash(form.errors)
-
-
-        
-           
+    else: flash(form.errors)         
     
     return render_template('sign_up.html',  
     form = form)
@@ -154,7 +191,7 @@ def forecast():
 #Trends route
 @app.route('/Dashboard')
 def trends():
-    sendmail()
+    get_emails()
     return render_template('Dashboard.html')
 
 #'About us' Route
@@ -255,15 +292,23 @@ lowest_prx = 2000
     
 #creating the feed parser
 def fetch_feeds():
-    feed_url = 'http://feeds.bbci.co.uk/news/business/rss.xml'
-    feed = feedparser.parse(feed_url)
+    with app.app_context():
+        feed_url = 'http://feeds.bbci.co.uk/news/business/rss.xml'
+        feed = feedparser.parse(feed_url)
     
-    entries = feed.entries
-    feed_urls = [entry.link for entry in entries]
+        entries = feed.entries
+        feed_urls = [entry.link for entry in entries]
 
-    feed_title = feed.feed.title
+        feed_title = feed.feed.title
+
 
     return feed_title, entries, feed_urls
+#creating scheduler that fetches feeds daily
+Feed_scheduler = BackgroundScheduler()
+# # Schedule the fetch_feeds function to run daily at a specific time
+Feed_scheduler.add_job(fetch_feeds, 'interval', days=1, start_date='2023-07-10 19:06:00')
+# # Start the scheduler
+Feed_scheduler.start()
 
 
 @app.route('/Key_Stats')
@@ -308,10 +353,16 @@ def recommendations():
    values_beans_mbale = values_beans_mbale,
    values_beans_gulu = values_beans_gulu,
    )
- 
+def get_all_users():
+    with app.app_context():
+        users = Users.query.all()
+        print(users)
+
+get_all_users()
 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+    db.create_all()
 

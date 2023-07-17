@@ -10,7 +10,7 @@
     <div class="card-body">
         <form action="/sign_up" method="POST" class="ps-3">
           {{ form.csrf_token }}
-            <div class="col row g-3 align-items-center ">
+            <div class="col col-sm-12 row g-3 align-items-center ">
                 <div class="col-auto">
                  
                   {{form.firstName.label}}
@@ -35,14 +35,10 @@
                 </div>
                 <div class="col-auto w-50">
                 {{form.email (class="form-control shadow-sm", type="email" )}}
-                <!-- flash messages -->
+       <!-- flash messages -->
     
             
-        {% for message in get_flashed_messages() %}
-                
-          {{message}}
-                  
-        {%endfor%}
+       
                   
                </div>
             </div>
@@ -75,6 +71,11 @@
                 {{form.submit (class="btn bg-primary-subtle w-auto shadow-lg", id="submit")}}
               </div>
             </form>
+            {% for message in get_flashed_messages() %}
+                
+            {{message}}
+                    
+          {%endfor%}
             
             
           </div>
